@@ -1,58 +1,71 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    <p>
-      For a guide and recipes on how to configure / customize this project,<br>
-      check out the
-      <a href="https://cli.vuejs.org" target="_blank" rel="noopener">vue-cli documentation</a>.
-    </p>
-    <h3>Installed CLI Plugins</h3>
-    <ul>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel" target="_blank" rel="noopener">babel</a></li>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-typescript" target="_blank" rel="noopener">typescript</a></li>
-    </ul>
-    <h3>Essential Links</h3>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank" rel="noopener">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank" rel="noopener">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank" rel="noopener">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank" rel="noopener">Twitter</a></li>
-      <li><a href="https://news.vuejs.org" target="_blank" rel="noopener">News</a></li>
-    </ul>
-    <h3>Ecosystem</h3>
-    <ul>
-      <li><a href="https://router.vuejs.org" target="_blank" rel="noopener">vue-router</a></li>
-      <li><a href="https://vuex.vuejs.org" target="_blank" rel="noopener">vuex</a></li>
-      <li><a href="https://github.com/vuejs/vue-devtools#vue-devtools" target="_blank" rel="noopener">vue-devtools</a></li>
-      <li><a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a></li>
-    </ul>
-  </div>
+  <v-container>
+    <v-row class="text-center">
+      <v-col class="mb-4">
+        <h1 class="display-2 font-weight-bold mb-3">
+          Welcome to Kota Fukui's Homepage!
+        </h1>
+
+        <p class="subheading font-weight-regular">
+          これは実験場です。色々な機能を試します。
+        </p>
+      </v-col>
+    </v-row>
+
+    <v-card>
+      <v-toolbar flat color="primary" dark>
+        <v-toolbar-title>お品書き</v-toolbar-title>
+      </v-toolbar>
+      <v-tabs vertical>
+        <v-tab>
+          <v-icon left> mdi-access-point </v-icon>
+          音楽再生
+        </v-tab>
+        <v-tab-item>
+          <v-card flat>
+            <v-card-text>
+              music player
+            </v-card-text>
+            <v-text-field placeholder="ここにフォーカスして遊んでください。" v-on:keydown.space="playSound('kick')" v-on:keydown.enter="playSound('snare')" v-on:keydown.17="playSound('crash')"></v-text-field>
+            <v-btn
+              @click="playSound('kick');"
+              elevation="3"
+            >kick</v-btn>
+             <v-btn
+              elevation="3"
+              @click="playSound('snare');"
+            >snare</v-btn>
+            <v-btn
+              elevation="3"
+              @click="playSound('crash');"
+            >crash</v-btn>
+          </v-card>
+        </v-tab-item>
+      </v-tabs>
+    </v-card>
+  </v-container>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
+import Vue from "vue";
 
-@Component
-export default class HelloWorld extends Vue {
-  @Prop() private msg!: string;
-}
+export default Vue.extend({
+  name: "HelloWorld",
+  
+  data: () => ({}),
+  methods:{
+    playSound: function(name:string) {
+      if(name==='kick'){
+        const audio = new Audio(require('@/assets/sounds/edm-kick-01.wav'))
+        audio.play();
+      }else if(name==='snare'){
+        const audio = new Audio(require('@/assets/sounds/edm-snare-01.wav'))
+        audio.play();
+      }else if(name==='crash'){
+        const audio = new Audio(require('@/assets/sounds/edm-crash-04.wav'))
+        audio.play();
+      }
+    },
+  }
+});
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
-</style>
